@@ -1,0 +1,28 @@
+version: '3'
+services:
+  bot:
+    build:
+      context: .
+    restart: always
+    env_file:
+      - .env
+#    environment:
+#      - TBOT_TOKEN=${TOKEN}
+#      - TBOT_CHAT_IDS=${IDS}
+
+  db:
+      image: "postgres:14"
+      restart: always
+      env_file:
+        - .env
+
+      volumes:
+        - "/home/myroslav/PycharmProjects/tbot_postgres_data:/var/lib/postgresql/data"
+      environment:
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASS}
+        POSTGRES_DB: ${DB_NAME}
+      ports:
+        - "6007:5432"
+      expose:
+        - 5432
